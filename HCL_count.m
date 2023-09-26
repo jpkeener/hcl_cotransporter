@@ -1,5 +1,5 @@
 % calculate HCl states
-global   pw10
+global   pw10 discC
 pw = [5,4,3,2,1,0];
 pw10=[10^5,10^4,10^3,10^2,10,1];
  
@@ -289,7 +289,7 @@ Y=[100000;
     110110;
     101110];
  
-XY=[X,Y];
+XY=[X,Y]
 
 for j = 1:length(X)
  
@@ -517,9 +517,9 @@ end
 incldcols=find(sum(Amat)>0)
 incldrows = find(sum(Amat'>0))
 B=Amat(incldrows,:);
- size(B)
+  
 C=B(:,incldrows)
-size(C)
+ 
 Cd = sum(C)
 nmr = length(incldrows)
 for j = 1:nmr
@@ -530,8 +530,8 @@ end
  % check for reducibility
 
  sc = max(Cd)+10000;
- discC= diag(ones(nmr,1)) +C/sc
- size(discC)
+ discC= diag(ones(nmr,1)) +C/sc;
+ size(discC);
  mc = dtmc(discC);
  isreducible(mc)
 % 
@@ -546,8 +546,23 @@ end
 figure(1)
 graphplot(mc)
 
+codebreak(incldrows(20))
+codebreak(incldrows(6))
+incldrows(20)
+incldrows(6)
+p0=zeros(24,1);
+p0(1) = 1;
 
+p1=iterateC(p0,50000000)
 
+% check for convergence
+C*p1
+
+% now find the flux
+% next...
+
+figure(2)
+semilogy(p1,'*')
  function gv=getv(V)
 xt=V;
 for j = 1:6
@@ -601,5 +616,13 @@ for j1=0:1
             end
         end
     end
+end
+end
+
+function p1 = iterateC(p0,n)
+global discC
+for j = 1:n
+    p1=discC*p0;
+p0 = p1;
 end
 end
