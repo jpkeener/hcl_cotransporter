@@ -550,6 +550,10 @@ codebreak(incldrows(20))
 codebreak(incldrows(6))
 incldrows(20)
 incldrows(6)
+XY(incldrows(3),:)
+XY(incldrows(6),:)
+ 
+
 p0=zeros(24,1);
 p0(1) = 1;
 
